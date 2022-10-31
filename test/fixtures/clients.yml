@@ -3,11 +3,11 @@
 one:
   name: MyString
   age: 1
-  private_node: MyText
+  private_note: MyText
   address: MyString
 
 two:
   name: MyString
   age: 1
-  private_node: MyText
+  private_note: MyText
   address: MyString

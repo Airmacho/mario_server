@@ -8,11 +8,6 @@ RSpec.describe "/jobs", type: :request do
   let!(:plumber_mario) { create(:plumber_mario) }
   let!(:plumber_luigi) { create(:plumber_luigi) }
   let!(:client_peach) { create(:client_peach) }
-  
-
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
 
   let(:valid_headers) {
     {}
@@ -139,17 +134,11 @@ RSpec.describe "/jobs", type: :request do
   end
 
   describe "PATCH /complete" do
+    before do
+      @my_job = create(:job_allocated, plumber: plumber_mario, client: client_peach, started_at: Time.now)
+      @others_job = create(:job_allocated, plumber: plumber_luigi, client: client_peach)
+    end
     context "with valid parameters" do
-      before do
-        @my_job = create(:job_allocated, plumber: create(:plumber_mario), client: create(:client_peach))
-        @others_job = create(:job_allocated, plumber: create(:plumber_luigi), client: create(:client_peach))
-      end
-      # let(:job_complete_params) {
-      #   {
-      #     plumber_id: 
-      #   }
-      # }
-
       it "should set the status as completed when current status is allocated" do
         expect(@my_job.status_allocated?).to be true
         expect(@my_job.finished_at).to be nil
@@ -161,19 +150,22 @@ RSpec.describe "/jobs", type: :request do
         expect(@my_job.finished_at).not_to be nil
       end
 
-      it "renders a JSON response with the job" do
-        job = Job.create! valid_attributes
-        patch job_url(job),
-              params: { job: new_attributes }, headers: valid_headers, as: :json
-        expect(response).to have_http_status(:ok)
-        expect(response.content_type).to match(a_string_including("application/json"))
+      it "should set the status as completed when current status is allocated" do
+        expect(@others_job.status_allocated?).to be true
+        expect(@others_job.finished_at).to be nil
+        # job = Job.create! valid_attributes
+        patch job_complete_url(@my_job),
+              params: { plumber_id: @my_job.plumber_id, id: @my_job.id }, headers: valid_headers, as: :json
+        @my_job.reload
+        expect(@my_job.status_completed?).to be true
+        expect(@my_job.finished_at).not_to be nil
       end
     end
   end
 
   describe "DELETE /destroy" do
     it "destroys the requested job" do
-      job = Job.create! valid_attributes
+      job = create(:job_allocated, plumber: plumber_mario, client: client_peach, started_at: Time.now + 2.hours)
       expect {
         delete job_url(job), headers: valid_headers, as: :json
       }.to change(Job, :count).by(-1)

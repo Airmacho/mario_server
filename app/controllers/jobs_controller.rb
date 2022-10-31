@@ -31,7 +31,7 @@ class JobsController < ApplicationController
     @job = Job.find_by(plumber_id: params[:plumber_id], id: params[:id])
     raise ActiveRecord::RecordNotFound unless @job
     if @job.mark_completed!
-      render :show, status: :ok, location: @job
+      render :show, status: :ok
     else
       render json: @job.errors, status: :unprocessable_entity
     end

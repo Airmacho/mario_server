@@ -9,8 +9,8 @@
 Admin.destroy_all
 Admin.create(name: 'Bowser', credentials: 'GoWork')
 Client.destroy_all
-Client.create({name: 'Princess Peach', age: 16, private_node: 'nice and shine', address: 'Mushroom Kingdom'})
-Client.create({name: 'Princess Dasiy', age: 15, private_node: 'nice and shine', address: 'Mushroom Kingdom'})
+Client.create({name: 'Princess Peach', age: 16, private_note: 'nice and shine', address: 'Mushroom Kingdom'})
+Client.create({name: 'Princess Dasiy', age: 15, private_note: 'nice and shine', address: 'Mushroom Kingdom'})
 Plumber.destroy_all
 Plumber.create({name: 'Mario', address: 'Mushroom Kingdom', vehicles: 'Racing Car'})
 Plumber.create({name: 'Luigi', address: 'Mushroom Kingdom', vehicles: 'Racing Motor'})

@@ -8,12 +8,11 @@ Rails.application.routes.draw do
   post   'login'   => 'sessions#create'
   delete 'logout'  => 'sessions#destroy'
 
-  resources :admins
-  resources :plumbers do
+  resources :plumbers, only: [:create] do
     get :jobs
   end
-  resources :clients
-  resources :jobs do 
+  resources :clients, only: [:create, :destroy]
+  resources :jobs, only: [:index, :create, :destroy] do 
     patch :complete
   end
 end

@@ -1,11 +1,7 @@
-add comments in (job) migration file, to explain extra columns
-add audited gem to implement audit log feature
-
 # README
 
 You need to accomplish following tasks
 - Dashboard that shows currently allocated jobs in a date period
-    /jobs?query_date=2022-10-31&status=allocated
 - Admin (manager) user authentication
 - Add plumbers
 - Add clients
@@ -20,16 +16,17 @@ application up and running.
 Things you may want to cover:
 
 * Ruby version
-
-* System dependencies
+* Ruby 3.0 + Rails 7.0.4
 
 * Configuration
+currently no further configs
 
-* Database creation
-
-* Database initialization
+* Database initalize
+to simplify the db manipulation, use sqlite3 as persist layer.
+rake db:drop db:create db:migrate db:seed
 
 * How to run the test suite
+use rspec as the test framework
 
 * Services (job queues, cache servers, search engines, etc.)
 
